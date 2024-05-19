@@ -164,7 +164,7 @@ function PneumaticComponent({
             state={simulationState as PneumaticButtonState}
           />
           <PneumaticComponentStateViz id={"2"} description={description} />
-          <mesh position={[0, 0.35, 0]} receiveShadow castShadow>
+          <mesh position={[0, 0.45, 0]} receiveShadow castShadow>
             <meshBasicMaterial color="red" />
           </mesh>
         </group>
@@ -213,7 +213,9 @@ function PneumaticComponentStateViz({
   useFrame(() => {
     if (!textRef.current) return;
 
-    const newText = JSON.stringify(description, null, 2);
+    const formmattedText = `${description._id}\n\nTerminal Pressures:\n${Object.entries(description.terminalPressures).map(([id, value], index) => id + ": " + value.toFixed(2) + "\n")}`;
+
+    const newText = formmattedText;
 
     if (newText !== text || text === "OO") {
       setText(newText);
@@ -229,7 +231,7 @@ function PneumaticComponentStateViz({
   }, []);
 
   return (
-    <Text position={[0, 0, 0.11]} scale={0.02} ref={textRef}>
+    <Text position={[0, 0, 0.18]} scale={0.02} ref={textRef}>
       {text}
     </Text>
   );
@@ -294,7 +296,7 @@ function iterateSimulation(
       const pressureDifference = supplyPressure - pressure;
 
       if (pressureDifference > 0) {
-        tube.residualMass += pressureDifference * 0.1;
+        tube.residualMass += pressureDifference * 0.3;
       }
     } else if (component._kind === "button") {
       const button = component as PneumaticButtonState;
@@ -359,6 +361,7 @@ function iterateSimulation(
         button.alert = "No tubes connected to terminal 3";
       } else {
         button.alert = null;
+        tube3 = tubesAtTerminal3[0];
       }
 
       if (tubesAtTerminal4.length > 1) {
@@ -368,6 +371,7 @@ function iterateSimulation(
         button.alert = "No tubes connected to terminal 4";
       } else {
         button.alert = null;
+        tube4 = tubesAtTerminal4[0];
       }
 
       const pressure1 = residualMassToPressure(tube1.residualMass);
@@ -380,8 +384,10 @@ function iterateSimulation(
 
       const pressureDifference34 = pressure3 - pressure4;
 
-      button.terminalPressures[1] = button.terminalPressures[2] = pressure2;
-      button.terminalPressures[3] = button.terminalPressures[4] = pressure4;
+      button.terminalPressures[1] = pressure1;
+      button.terminalPressures[2] = pressure2;
+      button.terminalPressures[3] = pressure3;
+      button.terminalPressures[4] = pressure4;
 
       if (button.leftPressed) {
         tube1.residualMass += -pressureDifference12 * 0.3;
@@ -423,7 +429,7 @@ function iterateSimulation(
       cylinder.terminalPressures[1] = pressure;
 
       // Set expansion proportional to pressure
-      cylinder.expansion = pressure / 3;
+      cylinder.expansion = pressure / 1.5;
     } else if (component._kind === "splitter") {
       const splitter = component as PneumaticSplitterState;
 
@@ -591,7 +597,7 @@ export default function Index() {
           })}
         </group>
 
-        <SimulationInfoIndicator tubes={pneumaticTubesState.current} />
+        {/* <SimulationInfoIndicator tubes={pneumaticTubesState.current} /> */}
 
         <NonImmersiveCamera position={[0, 1.5, 4]} />
         <ImmersiveSessionOrigin position={[0, 0, 1]}>

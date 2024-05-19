@@ -25,7 +25,7 @@ export function SnapBase({
       </mesh>
       <group position={[0, 0, 0.1]}>
         <Text color="black" fontSize={0.02} position={[0, 0, 0.01]}>
-          {id}
+          {"T" + id.split("/")[1]}
         </Text>
       </group>
     </group>
