@@ -1,5 +1,6 @@
 import { Layout } from '@/components/dom/Layout'
-import '@/global.css'
+import '@/app/global.css'
+import consolere from 'console-remote-client'
 
 export const metadata = {
   title: 'Next.js + Three.js',
