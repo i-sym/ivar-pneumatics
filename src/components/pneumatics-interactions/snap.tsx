@@ -84,7 +84,7 @@ export function Draggable({
         const snappableObjects: THREE.Object3D[] = [];
 
         scene.traverse((obj) => {
-          if (obj.userData.kind === "snappable") {
+          if (obj.userData.kind === "snappablee") {
             snappableObjects.push(obj);
           }
         });
