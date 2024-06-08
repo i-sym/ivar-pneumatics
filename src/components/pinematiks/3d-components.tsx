@@ -16,13 +16,13 @@ import { Box } from "@react-three/drei";
 return (
     <>
       <group
-        scale={0.003}
+        scale={0.002}
         position={[0, -0.003, 0.005]}
         rotation={[0, 0, Math.PI]}
       >
         <GltfModel gltfUrl="/models/piston.glb" />
       </group>
-      <group scale={0.003} rotation={[Math.PI / 2, 0, 0]}>
+      <group scale={0.002} rotation={[Math.PI / 2, 0, 0]}>
         <GltfModel gltfUrl="/models/cylinder.glb" />
       </group>
     </>
@@ -78,14 +78,14 @@ export function PneumaticPiston({
   return (
     <group>
       <group
-        scale={0.003}
+        scale={0.002}
         position={[0, -0.003, 0.005]}
         rotation={[0, 0, Math.PI]}
         ref={cylinderRef}
       >
         <GltfModel gltfUrl="/models/piston.glb" />
       </group>{" "}
-      <group scale={0.003} rotation={[Math.PI / 2, 0, 0]}>
+      <group scale={0.002} rotation={[Math.PI / 2, 0, 0]}>
         <GltfModel gltfUrl="/models/cylinder.glb" />
       </group>
       <SnapBase position={[0.19, 0.08, 0]} id={`${id}/1`} />

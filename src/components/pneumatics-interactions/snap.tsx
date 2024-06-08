@@ -36,16 +36,20 @@ export function Draggable({
   downState,
   position,
   children,
+  isSnappable = true,
+  isRotatable = false,
 }: {
   downState: React.MutableRefObject<
     | {
-        pointerId: number;
-        pointToObjectOffset: THREE.Vector3;
-      }
+      pointerId: number;
+      pointToObjectOffset: THREE.Vector3;
+    }
     | undefined
   >;
   position: [number, number, number];
   children?: React.ReactNode;
+  isSnappable?: boolean;
+  isRotatable?: boolean;
 }) {
   const ref = useRef<THREE.Group>(null);
 

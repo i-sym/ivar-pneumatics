@@ -1,31 +1,10 @@
 "use client";
-import {
-  XRCanvas,
-  PointerHand,
-  PointerController,
-  Hands,
-  Controllers,
-} from "@coconut-xr/natuerlich/defaults";
+import { XRCanvas, PointerHand, PointerController, Hands, Controllers, } from "@coconut-xr/natuerlich/defaults";
 import { use, useEffect, useRef, useState } from "react";
-import {
-  useEnterXR,
-  NonImmersiveCamera,
-  ImmersiveSessionOrigin,
-  useInputSources,
-  useXR,
-} from "@coconut-xr/natuerlich/react";
+import { useEnterXR, NonImmersiveCamera, ImmersiveSessionOrigin, useInputSources, useXR, } from "@coconut-xr/natuerlich/react";
 import { isXIntersection } from "@coconut-xr/xinteraction";
 import * as THREE from "three";
-
-import {
-  Box,
-  Environment,
-  GizmoHelper,
-  GizmoViewport,
-  OrbitControls,
-  QuadraticBezierLine,
-  Text,
-} from "@react-three/drei";
+import { Box, Environment, GizmoHelper, GizmoViewport, OrbitControls, QuadraticBezierLine, Text, } from "@react-three/drei";
 import { ThreeEvent, useFrame, useThree } from "@react-three/fiber";
 import consolere from "console-remote-client";
 import React from "react";
@@ -33,25 +12,12 @@ import { atom, PrimitiveAtom, useAtom } from "jotai";
 import { splitAtom } from "jotai/utils";
 import { Tube } from "@/components/pinematiks/tube";
 import { SnapBase, Draggable } from "@/components/pneumatics-interactions/snap";
-import {
-  PneumaticButton,
-  PneumaticCompressor,
-  PneumaticMuptiplier,
-  PneumaticPiston,
-} from "@/components/pinematiks/3d-components";
-import {
-  PneumapicTubeState,
-  PneumaticComponentDescription,
-  PneumaticButtonState,
-  PneumaticComponentKind,
-  PneumaticComponentState,
-  PneumaticCompressorState,
-  PneumaticCylinderState,
-  PneumaticPipeDescription,
-  PneumaticSplitterState,
-  PneumaticState,
-} from "@/types/PneumaticTypes";
+import { PneumaticButton, PneumaticCompressor, PneumaticMuptiplier, PneumaticPiston } from "@/components/pinematiks/3d-components";
+import { PneumapicTubeState, PneumaticComponentDescription, PneumaticButtonState, PneumaticComponentKind, PneumaticComponentState, PneumaticCylinderState, PneumaticPipeDescription, PneumaticSplitterState, PneumaticState, } from "@/types/PneumaticTypes";
 import { GltfModel } from "@/components/mesh-loader";
+import { title } from "process";
+import Excercises from "@/components/excercises";
+
 const sessionOptions: XRSessionInit = {
   requiredFeatures: ["local-floor", "hand-tracking"],
 };
@@ -79,23 +45,7 @@ const initialPneumaticComponentSet: PneumaticComponentState[] = [
     connectedTubes: [],
   },
   {
-    _id: "splitter2",
-    _kind: "splitter",
-    alert: null,
-    terminalPressures: { 1: 0, 2: 1, 3: 0 },
-    connectedTubes: [],
-  },
-  {
     _id: "button1",
-    _kind: "button",
-    leftPressed: false,
-    rightPressed: false,
-    alert: null,
-    terminalPressures: { 1: 0, 2: 0, 3: 0, 4: 0 },
-    connectedTubes: [],
-  },
-  {
-    _id: "button2",
     _kind: "button",
     leftPressed: false,
     rightPressed: false,
@@ -536,12 +486,40 @@ const pneumaticTubesState = {
   current: initialTubeSet,
 };
 
+function SimulationInfoIndicator({ tubes }: { tubes: PneumapicTubeState[] }) {
+  const ref = useRef<THREE.Mesh>();
+
+  const [text, setText] = useState("0");
+
+  useFrame(() => {
+    if (!ref.current) return;
+    // Set text to JSON stringified tubes
+    const newText = JSON.stringify(tubes, null, 2);
+
+    if (newText !== text) {
+      setText(newText);
+    }
+  });
+
+  // Set position to camera position
+  // console.log("Remounted Text");
+
+  return (
+    <group>
+      <Text position={[0, 1, 0]} scale={0.02} ref={ref}>
+        {text}
+      </Text>
+    </group>
+  );
+}
+
+
 export default function Index() {
   const enterAR = useEnterXR("immersive-ar", sessionOptions);
   const inputSources = useInputSources();
   const downState = useRef<{
     pointerId: number;
-    pointToObjectOffset: Vector3;
+    pointToObjectOffset: THREE.Vector3;
   }>();
 
   const objectRefs = useRef<{
@@ -566,6 +544,8 @@ export default function Index() {
           components={pneumaticComponentsState.current}
           tubes={pneumaticTubesState.current}
         />
+
+        <Excercises downState={downState} />
 
         <group>
           {pneumaticComponentsState.current.map((component, index) => {
@@ -619,36 +599,25 @@ export default function Index() {
               });
             }}
           />
-          <Controllers type="grab" />
+          <Controllers type="grab"
+            filterIntersections={(intersections) => {
+              return intersections.filter((intersection) => {
+                if (!intersection.point) return false;
+                if (
+                  !(
+                    intersection.point.y &&
+                    intersection.point.x &&
+                    intersection.point.z
+                  )
+                )
+                  return false;
+
+                return true;
+              });
+            }} />
         </ImmersiveSessionOrigin>
       </XRCanvas>
-    </div>
+    </div >
   );
 }
 
-function SimulationInfoIndicator({ tubes }: { tubes: PneumapicTubeState[] }) {
-  const ref = useRef<THREE.Mesh>();
-
-  const [text, setText] = useState("0");
-
-  useFrame(() => {
-    if (!ref.current) return;
-    // Set text to JSON stringified tubes
-    const newText = JSON.stringify(tubes, null, 2);
-
-    if (newText !== text) {
-      setText(newText);
-    }
-  });
-
-  // Set position to camera position
-  // console.log("Remounted Text");
-
-  return (
-    <group>
-      <Text position={[0, 1, 0]} scale={0.02} ref={ref}>
-        {text}
-      </Text>
-    </group>
-  );
-}
