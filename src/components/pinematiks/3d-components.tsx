@@ -11,6 +11,7 @@ import {
 } from "@/types/PneumaticTypes";
 import { useFrame } from "@react-three/fiber";
 import { Box } from "@react-three/drei";
+import { Image } from "@react-three/drei";
 
 /*
 return (
@@ -42,6 +43,9 @@ export function PneumaticCompressor({
         <boxGeometry />
         <meshStandardMaterial color="gray" />
       </mesh>
+      <group scale={0.1} position={[0, -0.02, 0.08]} >
+        <Image url="/compressor.jpg" position={[0, 0, 0]} zoom={0.8} scale={[0.5, 1.2]} transparent opacity={0.8} />
+      </group>
 
       <SnapBase position={[0, 0.1, 0]} id={`${id}/1`} />
     </group>
@@ -85,6 +89,9 @@ export function PneumaticPiston({
       >
         <GltfModel gltfUrl="/models/piston.glb" />
       </group>{" "}
+      <group scale={0.3} position={[0, -0.15, -0.04]} >
+        <Image url="/piston.jpg" position={[0, 0, 0]} zoom={0.8} scale={[0.5, 0.3]} transparent opacity={0.8} />
+      </group>
       <group scale={0.002} rotation={[Math.PI / 2, 0, 0]}>
         <GltfModel gltfUrl="/models/cylinder.glb" />
       </group>
@@ -124,6 +131,17 @@ export function PneumaticButton({
       <group scale={5} rotation={[Math.PI / 2, 0, 0]}>
         <GltfModel gltfUrl="/models/SAI2017.glb" />
       </group>
+
+      {/* <group scale={0.3} position={[0.14, 0.0, -0.04]} rotation={[0, Math.PI / 2, Math.PI]}>
+        <Image url="/valve1.jpg" position={[0, 0, 0]} zoom={0.8} scale={[0.5, 0.3]} transparent opacity={0.8} />
+      </group>
+      <group scale={0.3} position={[-0.14, 0.0, -0.04]} rotation={[0, -Math.PI / 2, Math.PI]}>
+        <Image url="/valve1.jpg" position={[0, 0, 0]} zoom={0.8} scale={[0.5, 0.3]} transparent opacity={0.8} />
+      </group> */}
+      <group scale={0.3} position={[0, -0.15, 0.02]} >
+        <Image url="/valve1.jpg" position={[0, 0, 0]} zoom={0.8} scale={[0.5, 0.3]} transparent opacity={0.8} />
+      </group>
+
       <mesh
         rotation={[Math.PI / 2, 0, 0]}
         position={[-0.1, 0.002, 0.1]}
@@ -167,7 +185,7 @@ export function PneumaticButton({
       <group rotation={[0, 0, Math.PI]}>
         <SnapBase position={[-0.1, 0.17, -0.04]} id={`${id}/4`} />
       </group>
-    </group>
+    </group >
   );
 }
 

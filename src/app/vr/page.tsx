@@ -31,21 +31,21 @@ consolere.connect({
 
 const initialPneumaticComponentSet: PneumaticComponentState[] = [
   {
-    _id: "compressor1",
+    _id: "Pressure source 1",
     _kind: "compressor",
     terminalPressures: { 1: 0 },
     alert: null,
     connectedTubes: [],
   },
+  // {
+  //   _id: "Splitter1",
+  //   _kind: "splitter",
+  //   alert: null,
+  //   terminalPressures: { 1: 0, 2: 0, 3: 0 },
+  //   connectedTubes: [],
+  // },
   {
-    _id: "splitter1",
-    _kind: "splitter",
-    alert: null,
-    terminalPressures: { 1: 0, 2: 0, 3: 0 },
-    connectedTubes: [],
-  },
-  {
-    _id: "button1",
+    _id: "Valve with push button 1",
     _kind: "button",
     leftPressed: false,
     rightPressed: false,
@@ -54,7 +54,7 @@ const initialPneumaticComponentSet: PneumaticComponentState[] = [
     connectedTubes: [],
   },
   {
-    _id: "cylinder1",
+    _id: "Spring loaded Single acting cylinder 1",
     _kind: "cylinder",
     expansion: 0,
     alert: null,
@@ -62,7 +62,7 @@ const initialPneumaticComponentSet: PneumaticComponentState[] = [
     connectedTubes: [],
   },
   {
-    _id: "cylinder2",
+    _id: "Spring loaded Single acting cylinder 2",
     _kind: "cylinder",
     expansion: 0,
     alert: null,
