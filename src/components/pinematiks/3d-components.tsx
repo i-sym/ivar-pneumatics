@@ -138,7 +138,7 @@ export function PneumaticButton({
       <group scale={0.3} position={[-0.14, 0.0, -0.04]} rotation={[0, -Math.PI / 2, Math.PI]}>
         <Image url="/valve1.jpg" position={[0, 0, 0]} zoom={0.8} scale={[0.5, 0.3]} transparent opacity={0.8} />
       </group> */}
-      <group scale={0.3} position={[0, -0.15, 0.02]} >
+      <group scale={0.3} position={[0, -0.15, 0.02]} rotation={[0, 0, Math.PI]}>
         <Image url="/valve1.jpg" position={[0, 0, 0]} zoom={0.8} scale={[0.5, 0.3]} transparent opacity={0.8} />
       </group>
 
