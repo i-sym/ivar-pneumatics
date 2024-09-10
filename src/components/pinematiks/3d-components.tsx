@@ -12,6 +12,7 @@ import {
 import { useFrame } from "@react-three/fiber";
 import { Box } from "@react-three/drei";
 import { Image } from "@react-three/drei";
+import { Text } from "@react-three/drei";
 
 /*
 return (
@@ -46,6 +47,10 @@ export function PneumaticCompressor({
       <group scale={0.1} position={[0, -0.02, 0.08]} >
         <Image url="/compressor.jpg" position={[0, 0, 0]} zoom={0.8} scale={[0.5, 1.2]} transparent opacity={0.8} />
       </group>
+
+      <Text color="black" fontSize={0.03} position={[0, 0.12, 0.05]} maxWidth={1} wrap="true">
+        AIR SOURCE
+      </Text>
 
       <SnapBase position={[0, 0.1, 0]} id={`${id}/1`} />
     </group>
@@ -141,6 +146,18 @@ export function PneumaticButton({
       <group scale={0.3} position={[0, -0.15, 0.02]} rotation={[0, 0, Math.PI]}>
         <Image url="/valve1.jpg" position={[0, 0, 0]} zoom={0.8} scale={[0.5, 0.3]} transparent opacity={0.8} />
       </group>
+      <Text color="black" fontSize={0.03} position={[-0.1, 0.1, 0.05]} maxWidth={1} wrap="true">
+        IN
+      </Text>
+      <Text color="black" fontSize={0.03} position={[0.1, 0.1, 0.05]} maxWidth={1} wrap="true">
+        IN
+      </Text>
+      <Text color="black" fontSize={0.03} position={[0.1, -0.1, 0.05]} maxWidth={1} wrap="true">
+        OUT
+      </Text>
+      <Text color="black" fontSize={0.03} position={[-0.1, -0.1, 0.05]} maxWidth={1} wrap="true">
+        OUT
+      </Text>
 
       <mesh
         rotation={[Math.PI / 2, 0, 0]}

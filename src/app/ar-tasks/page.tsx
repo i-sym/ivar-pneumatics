@@ -16,7 +16,7 @@ import { PneumaticButton, PneumaticCompressor, PneumaticMuptiplier, PneumaticPis
 import { PneumapicTubeState, PneumaticComponentDescription, PneumaticButtonState, PneumaticComponentKind, PneumaticComponentState, PneumaticCylinderState, PneumaticPipeDescription, PneumaticSplitterState, PneumaticState, } from "@/types/PneumaticTypes";
 import { GltfModel } from "@/components/mesh-loader";
 import { title } from "process";
-import Examples from "@/components/examples";
+import Excercises from "@/components/excercises";
 
 const sessionOptions: XRSessionInit = {
   requiredFeatures: ["local-floor", "hand-tracking"],
@@ -69,13 +69,6 @@ const initialPneumaticComponentSet: PneumaticComponentState[] = [
     terminalPressures: { 1: 0 },
     connectedTubes: [],
   },
-  {
-    _id: "multiplier1",
-    _kind: "splitter",
-    alert: null,
-    terminalPressures: { 1: 0, 2: 0, 3: 0 },
-    connectedTubes: [],
-  }
 ];
 
 const initialTubeSet: PneumapicTubeState[] = [
@@ -552,7 +545,7 @@ export default function Index() {
           tubes={pneumaticTubesState.current}
         />
 
-        <Examples downState={downState} />
+        <Excercises downState={downState} />
 
         <group>
           {pneumaticComponentsState.current.map((component, index) => {
