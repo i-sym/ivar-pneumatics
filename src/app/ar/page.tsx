@@ -69,6 +69,13 @@ const initialPneumaticComponentSet: PneumaticComponentState[] = [
     terminalPressures: { 1: 0 },
     connectedTubes: [],
   },
+  {
+    _id: "multiplier1",
+    _kind: "splitter",
+    alert: null,
+    terminalPressures: { 1: 0, 2: 0, 3: 0 },
+    connectedTubes: [],
+  }
 ];
 
 const initialTubeSet: PneumapicTubeState[] = [
