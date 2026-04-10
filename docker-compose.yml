@@ -1,0 +1,13 @@
+services:
+  ivar-pneumatics:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ivar-pneumatics
+    restart: unless-stopped
+    ports:
+      - "3018:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0

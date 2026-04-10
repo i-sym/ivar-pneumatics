@@ -1,23 +1,23 @@
-# Use the official Node.js image as a base image
-FROM node:18-alpine
-
-# Set the working directory inside the container
+FROM node:22-alpine AS deps
 WORKDIR /app
+RUN corepack enable
+COPY package.json yarn.lock ./
+RUN corepack yarn install --frozen-lockfile
 
-# Copy the package.json and package-lock.json (or yarn.lock) files
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the entire project folder to the working directory
+FROM node:22-alpine AS builder
+WORKDIR /app
+RUN corepack enable
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN corepack yarn build
 
-# Expose the port Next.js will run on
+FROM node:22-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
 EXPOSE 3000
-
-# Set the environment variable to development
-ENV NODE_ENV=development
-
-# Start the Next.js application in development mode
-CMD ["npm", "run", "dev"]
+CMD ["node", "server.js"]
