@@ -24,14 +24,13 @@ Main routes:
 - React Three Fiber
 - `@react-three/xr`
 - Tailwind CSS
-- Yarn 1 via Corepack
+- Yarn 1.22.x
 - Docker / Docker Compose
 
 ## Requirements
 
 ### Local development
 - Node.js 20+ or 22+
-- Corepack enabled
 - Yarn 1.22.x
 
 ### Docker deployment
@@ -56,17 +55,16 @@ git clone https://github.com/i-sym/ivar-pneumatics.git
 cd ivar-pneumatics
 ```
 
-2. Enable Corepack and install dependencies:
+2. Install dependencies:
 
 ```bash
-corepack enable
-corepack yarn install
+yarn install
 ```
 
 3. Start the dev server:
 
 ```bash
-corepack yarn dev
+yarn dev
 ```
 
 4. Open the app in your browser.
@@ -79,8 +77,8 @@ By default Next runs on:
 To create a production build locally:
 
 ```bash
-corepack yarn build
-corepack yarn start
+yarn build
+yarn start
 ```
 
 Production server default:
@@ -161,7 +159,6 @@ So the app will be available at:
 
 This repo was updated to use:
 - `packageManager: yarn@1.22.22`
-- `corepack yarn install --frozen-lockfile` in Docker
 - Next.js `output: 'standalone'`
 - production multi-stage container build
 
@@ -174,14 +171,13 @@ This repo was updated to use:
 
 ## Troubleshooting
 
-### Build fails locally because `yarn` is strange or missing
+### Build fails locally because `yarn` is missing
 
-Use Corepack explicitly:
+Install Yarn 1.22.x and rerun:
 
 ```bash
-corepack enable
-corepack yarn --version
-corepack yarn install
+yarn --version
+yarn install
 ```
 
 ### Browser warnings during build
@@ -211,9 +207,8 @@ ports:
 ### Development
 
 ```bash
-corepack enable
-corepack yarn install
-corepack yarn dev
+yarn install
+yarn dev
 ```
 
 ### Production with Docker Compose
